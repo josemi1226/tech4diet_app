@@ -1,0 +1,31 @@
+ion-content {
+     /* Fondo blanco */
+    height: 100vh; /* Asegura que ocupe toda la pantalla */
+    min-height: 100vh; /* Evita que se colapse */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+ion-label {
+  color: #000000; /* Color negro para las etiquetas */
+  font-weight: bold; /* Negrita para las etiquetas */
+}
+
+ion-item {
+  margin-bottom: 16px; /* Espaciado entre los elementos */
+}
+
+ion-button {
+  margin-top: 24px; /* Espaciado superior para el botón */
+}
+
+ion-range {
+  --bar-background-active: var(--ion-color-primary);
+  --knob-background: var(--ion-color-primary);
+}
+
+ion-textarea {
+  --padding-start: 10px;
+  --padding-end: 10px;
+}

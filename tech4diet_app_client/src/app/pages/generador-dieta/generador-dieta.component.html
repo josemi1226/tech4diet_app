@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Generador de Dietas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <!-- ======= Objetivo ======= -->
+      <ion-item lines="none">
+        <ion-label>Objetivo</ion-label>
+        <ion-select [(ngModel)]="dieta.objetivo" name="objetivo" placeholder="Selecciona un objetivo" required>
+          <ion-select-option value="perdida">Pérdida de peso</ion-select-option>
+          <ion-select-option value="ganancia">Ganancia de masa muscular</ion-select-option>
+          <ion-select-option value="mantenimiento">Mantenimiento del peso</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <form (ngSubmit)="onSubmit()" #dietaForm="ngForm">
+    <!-- Tipo de Dieta -->
+    <ion-item>
+      <ion-label>Tipo de Dieta</ion-label>
+      <ion-select [(ngModel)]="dieta.tipoDieta" name="tipoDieta" multiple="true" required>
+        <ion-select-option value="vegetariana">Vegetariana</ion-select-option>
+        <ion-select-option value="vegana">Vegana</ion-select-option>
+        <ion-select-option value="keto">Keto</ion-select-option>
+        <ion-select-option value="mediterranea">Mediterránea</ion-select-option>
+        <ion-select-option value="paleo">Paleo</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Restricciones/Alergias -->
+    <ion-item>
+      <ion-label>Restricciones/Alergias</ion-label>
+      <ion-select [(ngModel)]="dieta.restricciones" name="restricciones" multiple="true">
+        <ion-select-option value="gluten">Gluten</ion-select-option>
+        <ion-select-option value="lactosa">Lactosa</ion-select-option>
+        <ion-select-option value="frutosSecos">Frutos secos</ion-select-option>
+        <ion-select-option value="mariscos">Mariscos</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Número de Comidas -->
+    <ion-item>
+      <ion-label>Número de Comidas</ion-label>
+      <ion-select [(ngModel)]="dieta.numeroComidas" name="numeroComidas" placeholder="Selecciona un número" required>
+        <ion-select-option value="1">1</ion-select-option>
+        <ion-select-option value="2">2</ion-select-option>
+        <ion-select-option value="3">3</ion-select-option>
+        <ion-select-option value="4">4</ion-select-option>
+        <ion-select-option value="5">5</ion-select-option>
+        <ion-select-option value="6">6</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Ajuste Manual de Macronutrientes -->
+    <ion-item>
+      <ion-label position="stacked">Grasas (%)</ion-label>
+      <ion-input type="number" [(ngModel)]="dieta.grasas" name="grasas" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Hidratos de Carbono (%)</ion-label>
+      <ion-input type="number" [(ngModel)]="dieta.hidratos" name="hidratos" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Proteínas (%)</ion-label>
+      <ion-input type="number" [(ngModel)]="dieta.proteinas" name="proteinas" required></ion-input>
+    </ion-item>
+
+    <!-- Alimentos Favoritos -->
+    <ion-item>
+      <ion-label position="stacked">Alimentos Favoritos</ion-label>
+      <ion-textarea [(ngModel)]="dieta.alimentosFavoritos" name="alimentosFavoritos"></ion-textarea>
+    </ion-item>
+
+    <!-- Alimentos Eliminados -->
+    <ion-item>
+      <ion-label position="stacked">Alimentos Eliminados</ion-label>
+      <ion-textarea [(ngModel)]="dieta.alimentosEliminados" name="alimentosEliminados"></ion-textarea>
+    </ion-item>
+
+    <!-- Botón de Enviar -->
+    <ion-button expand="block" type="submit" [disabled]="!dietaForm.valid">Generar Dieta</ion-button>
+  </form>
+</ion-content>
