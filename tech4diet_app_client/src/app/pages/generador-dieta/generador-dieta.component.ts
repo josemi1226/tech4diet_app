@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DietaService } from '../../services/dieta.service';
 
 @Component({
   selector: 'app-generador-dieta',
@@ -15,12 +16,35 @@ export class GeneradorDietaComponent {
     hidratos: null,
     proteinas: null,
     alimentosFavoritos: '',
-    alimentosEliminados: ''
+    alimentosEliminados: '',
   };
 
-  constructor() {}
+  constructor(private dietaService: DietaService) {}
 
   onSubmit() {
-    console.log('Dieta generada:', this.dieta);
+    this.dietaService.guardarDieta(this.dieta).subscribe(
+      (response) => {
+        console.log('Dieta guardada:', response);
+        alert('Dieta guardada correctamente');
+      },
+      (error) => {
+        console.error('Error al guardar la dieta:', error);
+        alert('Hubo un error al guardar la dieta');
+      }
+    );
+  }
+
+  resetForm() {
+    this.dieta = {
+      objetivo: '',
+      tipoDieta: [],
+      restricciones: [],
+      numeroComidas: 3,
+      grasas: null,
+      hidratos: null,
+      proteinas: null,
+      alimentosFavoritos: '',
+      alimentosEliminados: '',
+    };
   }
 }
