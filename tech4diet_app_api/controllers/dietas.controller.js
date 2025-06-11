@@ -1,9 +1,11 @@
+const { generarDieta } = require('../external-services/gemini.service');
 const Dieta = require('../models/dieta.model');
 const { response } = require('express');
 
 const createDieta = async (req, res = response) => {
     const { uid } = req; // El middleware validarJWT añade el uid del usuario al request
-    const { grasas = 0, hidratos = 0, proteinas = 0, ...data } = req.body;
+    const datosFormulario = req.body; // Datos del formulario de Generador de Dietas
+    const { grasas = 0, hidratos = 0, proteinas = 0 } = req.body;
 
     // Validar que la suma de grasas, hidratos y proteínas no exceda 100
     if (grasas + hidratos + proteinas > 100) {
@@ -14,15 +16,38 @@ const createDieta = async (req, res = response) => {
     }
 
     try {
-        // Crea una nueva dieta con el idUsuario del token
-        const nuevaDieta = new Dieta({ ...data, idUsuario: uid });
+        // Validación de campos obligatorios
+        if (!datosFormulario.numeroComidas || !datosFormulario.objetivo) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Faltan campos obligatorios como numeroComidas u objetivo.',
+            });
+        }
+
+        const datosUsuario = {
+            ...datosFormulario,
+            idUsuario: uid,
+        };
+
+        // Generar dieta desde Gemini
+        const respuestaGenerada = await generarDieta(datosUsuario);
+
+        // Guardar dieta en la base de datos
+        const nuevaDieta = new Dieta({
+            ...datosFormulario,
+            idUsuario: uid,
+            dietaTexto: respuestaGenerada.resultado || respuestaGenerada, // según tu API
+        });
+
         await nuevaDieta.save();
 
+        // Responder con la dieta generada
         res.status(201).json({
             ok: true,
-            msg: 'Dieta creada correctamente',
+            msg: 'Dieta generada y guardada correctamente',
             dieta: nuevaDieta,
         });
+
     } catch (error) {
         console.error('Error al crear la dieta:', error);
         res.status(500).json({

@@ -41,6 +41,7 @@ const DietaSchema = Schema(
             ref: 'Usuario',
             required: true,
         },
+        dietaTexto: { type: String, required: true }, // Aquí guardas el texto generado
     },
     { collection: 'dietas' }
 );

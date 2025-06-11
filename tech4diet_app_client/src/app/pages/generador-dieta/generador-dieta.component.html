@@ -23,7 +23,7 @@
     <!-- Tipo de Dieta -->
     <ion-item>
       <ion-label>Tipo de Dieta</ion-label>
-      <ion-select [(ngModel)]="dieta.tipoDieta" name="tipoDieta" multiple="true" required>
+      <ion-select [(ngModel)]="dieta.tipoDieta" name="tipoDieta" multiple="true" >
         <ion-select-option value="vegetariana">Vegetariana</ion-select-option>
         <ion-select-option value="vegana">Vegana</ion-select-option>
         <ion-select-option value="keto">Keto</ion-select-option>
@@ -85,4 +85,17 @@
     <!-- Botón de Enviar -->
     <ion-button expand="block" type="submit" [disabled]="!dietaForm.valid">Generar Dieta</ion-button>
   </form>
+
+   <!-- Mostrar la dieta generada -->
+   <ion-card *ngIf="dietaGenerada">
+    <ion-card-header>
+      <ion-card-title>Dieta Generada</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Objetivo:</strong> {{ dietaGenerada.objetivo }}</p>
+      <p><strong>Tipo de Dieta:</strong> {{ dietaGenerada.tipoDieta.join(', ') }}</p>
+      <p><strong>Restricciones:</strong> {{ dietaGenerada.restricciones.join(', ') }}</p>
+      <!-- Otros detalles de la dieta -->
+    </ion-card-content>
+  </ion-card>
 </ion-content>

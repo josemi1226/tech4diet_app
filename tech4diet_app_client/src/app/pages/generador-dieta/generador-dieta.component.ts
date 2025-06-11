@@ -17,7 +17,10 @@ export class GeneradorDietaComponent {
     proteinas: null,
     alimentosFavoritos: '',
     alimentosEliminados: '',
+    
   };
+
+  dietaGenerada: any = null; // Para almacenar la dieta generada
 
   constructor(private dietaService: DietaService) {}
 
@@ -32,12 +35,12 @@ export class GeneradorDietaComponent {
     }
     this.dietaService.guardarDieta(this.dieta).subscribe(
       (response) => {
-        console.log('Dieta guardada:', response);
-        alert('Dieta guardada correctamente');
+        console.log('Dieta generada:', response.dieta);
+        this.dietaGenerada = response.dieta; // Almacena la dieta generada
       },
       (error) => {
-        console.error('Error al guardar la dieta:', error);
-        alert('Hubo un error al guardar la dieta');
+        console.error('Error al generar la dieta:', error);
+        alert('Hubo un error al generar la dieta');
       }
     );
   }
