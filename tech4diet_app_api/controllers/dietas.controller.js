@@ -3,7 +3,15 @@ const { response } = require('express');
 
 const createDieta = async (req, res = response) => {
     const { uid } = req; // El middleware validarJWT añade el uid del usuario al request
-    const { ...data } = req.body;
+    const { grasas = 0, hidratos = 0, proteinas = 0, ...data } = req.body;
+
+    // Validar que la suma de grasas, hidratos y proteínas no exceda 100
+    if (grasas + hidratos + proteinas > 100) {
+        return res.status(400).json({
+            ok: false,
+            msg: 'La suma de grasas, hidratos y proteínas no puede exceder 100.',
+        });
+    }
 
     try {
         // Crea una nueva dieta con el idUsuario del token

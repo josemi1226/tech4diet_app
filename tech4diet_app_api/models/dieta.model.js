@@ -20,15 +20,15 @@ const DietaSchema = Schema(
         },
         grasas: {
             type: Number,
-            required: true,
+            //required: true,
         },
         hidratos: {
             type: Number,
-            required: true,
+            //required: true,
         },
         proteinas: {
             type: Number,
-            required: true,
+            //required: true,
         },
         alimentosFavoritos: {
             type: String,
