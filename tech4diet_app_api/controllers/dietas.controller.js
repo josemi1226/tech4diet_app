@@ -1,5 +1,6 @@
 const { generarDieta } = require('../external-services/gemini.service');
 const Dieta = require('../models/dieta.model');
+const Usuario = require('../models/usuario.model'); // Importa el modelo Usuario
 const { response } = require('express');
 
 const createDieta = async (req, res = response) => {
@@ -16,7 +17,7 @@ const createDieta = async (req, res = response) => {
     }
 
     try {
-        // Validación de campos obligatorios
+        // Validación de campos obligatorios del formulario
         if (!datosFormulario.numeroComidas || !datosFormulario.objetivo) {
             return res.status(400).json({
                 ok: false,
@@ -24,9 +25,26 @@ const createDieta = async (req, res = response) => {
             });
         }
 
+        // Busca los datos del usuario en la tabla Usuario
+        const usuario = await Usuario.findById(uid);
+        if (!usuario) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Usuario no encontrado.',
+            });
+        }
+
+        // Construye los datos para el prompt
         const datosUsuario = {
             ...datosFormulario,
-            idUsuario: uid,
+            pesoActual: usuario.pesoActual,
+            nivelActividad: usuario.plan.nivelActividad,
+            altura: usuario.altura,
+            sexo: usuario.sexo,
+            caloriasDiarias: usuario.plan.caloriasDiarias,
+            carbosDiarios: usuario.plan.carbosDiarios || 50, // Valor predeterminado si es null
+            proteinasDiarias: usuario.plan.proteinasDiarias || 20, // Valor predeterminado si es null
+            grasasDiarias: usuario.plan.grasasDiarias || 30, // Valor predeterminado si es null
         };
 
         // Generar dieta desde Gemini

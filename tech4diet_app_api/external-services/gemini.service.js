@@ -13,6 +13,11 @@ Genera una dieta personalizada basada en los siguientes datos:
 - Alimentos favoritos: ${datosUsuario.alimentosFavoritos}
 - Alimentos eliminados: ${datosUsuario.alimentosEliminados}
 - Peso actual: ${datosUsuario.pesoActual}
+- Nivel de actividad: ${datosUsuario.nivelActividad}
+- Altura: ${datosUsuario.altura} cm
+- Sexo: ${datosUsuario.sexo}
+- Calorías diarias: ${datosUsuario.caloriasDiarias}
+- Macronutrientes diarios: Carbos (${datosUsuario.carbosDiarios}g), Proteínas (${datosUsuario.proteinasDiarias}g), Grasas (${datosUsuario.grasasDiarias}g)
         `;
 
         const response = await axios.post(
