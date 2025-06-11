@@ -22,6 +22,14 @@ export class GeneradorDietaComponent {
   constructor(private dietaService: DietaService) {}
 
   onSubmit() {
+
+    const { grasas = 0, hidratos = 0, proteinas = 0 } = this.dieta;
+
+    // Validar que la suma de grasas, hidratos y proteínas no exceda 100
+    if (grasas + hidratos + proteinas > 100) {
+      alert('La suma de grasas, hidratos y proteínas no puede exceder 100.');
+      return;
+    }
     this.dietaService.guardarDieta(this.dieta).subscribe(
       (response) => {
         console.log('Dieta guardada:', response);
